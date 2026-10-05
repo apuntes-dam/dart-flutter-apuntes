@@ -8,10 +8,9 @@ Apuntes personales para aprender **Dart** y **Flutter**, organizados con la mism
 | Apartado | Contenido |
 |---|---|
 | [U1. Primer programa en Dart](u01/index.md) | Estructura, variables, operadores, tipos, pruebas |
+| [Mapa de unidades](unidades.md) | U1 a U9: teoría y ejercicios, con los ejercicios de cada unidad debajo de su teoría |
 | [Flutter: primera app](u01/05-flutter.md) | Widgets, estado y `setState` |
 | [Prácticas](u01/practicas.md) | Guía de prácticas de la unidad |
-| [Ejercicios de Programación](ejercicios/index.md) | 73 ejercicios adaptados con soluciones modelo |
-| [Ejercicios U3 a U5](ejercicios-u3-u5/index.md) | Cadenas, colecciones, JSON/XML y POO |
 | [Aplicaciones Híbridas · Tema 1](tema1-ah/index.md) | 29 ejercicios de otro módulo, adaptados |
 
 !!! note "Qué son Dart y Flutter"

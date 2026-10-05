@@ -1,0 +1,49 @@
+# U4.7 · Reto personal: cajero automático
+
+<div class="ej-gate" data-unit="u04" data-nombre="U4 · Programación orientada a objetos"></div>
+
+Proyecto final de POO para Dart. Sustituye al juego del ahorcado: repasa casi todo lo aprendido, sin ser enorme. Piénsalo como un **reto personal**, no como un examen.
+
+## Ejercicio 4.16
+
+**Cajero automático asíncrono.** Programa en consola un cajero de un banco ficticio. Cada nivel se puede entregar por separado: empieza por el básico y sube cuando te apetezca.
+
+**Piezas mínimas**
+
+* `Movimiento`: tipo (un enumerado `TipoMovimiento` con `ingreso`, `retirada` y `transferencia`), importe y fecha.
+* `Cuenta`: número, titular, saldo (solo consultable desde fuera) e historial de movimientos.
+* `Banco`: mapa de cuentas y un método `Future<Cuenta> buscarCuenta(String numero)` que **tarda 1 segundo** (simula la red) y falla si la cuenta no existe.
+* `Cajero`: menú de consola.
+
+**Nivel básico**
+
+1. Menú con: consultar saldo, ingresar, retirar, ver los últimos 5 movimientos y salir.
+2. No se puede retirar más de lo que hay.
+3. Las operaciones con el banco usan `async`/`await` y muestran `Procesando...` mientras esperan.
+
+**Nivel medio**
+
+4. Excepciones propias: `SaldoInsuficiente`, `CuentaNoEncontrada`, `LimiteDiarioSuperado` (máximo 600 € retirados al día) y `PinIncorrecto`.
+5. Pide un PIN de 4 dígitos (valídalo con una **expresión regular**). Tras 3 fallos, la tarjeta se bloquea.
+6. Añade `transferir(destino, importe)` entre dos cuentas.
+
+**Reto extra (opcional)**
+
+7. Guarda y carga las cuentas en un archivo JSON al salir y al entrar.
+8. Emite los movimientos como un `Stream` y muéstralos según llegan.
+9. Escribe pruebas con `package:test` para `Cuenta` y `Banco`.
+
+**Qué repasas**
+
+| Concepto | Dónde aparece |
+|---|---|
+| Clases y encapsulamiento | `Cuenta`, saldo privado |
+| Enumerados | `TipoMovimiento` |
+| Colecciones | mapa de cuentas, lista de movimientos |
+| Null safety | cuenta o PIN que pueden no existir |
+| Excepciones propias | las cuatro del nivel medio |
+| `Future`/`async`/`await` | `buscarCuenta` y las operaciones |
+| Expresiones regulares | validar el PIN |
+| JSON, `Stream`, pruebas | reto extra |
+
+*Consejo: dibuja antes las clases en papel (qué datos tiene cada una y qué hace) y escribe primero solo `Cuenta`, con sus pruebas. El resto se apoya en ella.*
