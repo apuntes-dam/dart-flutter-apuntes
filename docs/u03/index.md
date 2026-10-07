@@ -10,9 +10,6 @@ Las colecciones donde se guardan los datos: cadenas, listas, mapas (diccionarios
 * Conjuntos: elementos sin repetir y operaciones de unión, intersección y diferencia.
 * JSON y XML: leer, modificar y guardar datos en un archivo.
 
-!!! tip "Dónde repasarlo en Dart"
-    Documentación oficial: [dart.dev/language](https://dart.dev/language). Busca los términos de la lista anterior.
-
 ## Ejercicios de la unidad
 
 | Bloque | Ejercicios |

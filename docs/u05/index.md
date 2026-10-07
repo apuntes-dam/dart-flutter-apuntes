@@ -9,9 +9,6 @@ Reutilizar y organizar clases: **herencia**, **polimorfismo**, clases abstractas
 * Clases abstractas frente a interfaces.
 * Jerarquías cerradas (`sealed`) y clases de datos.
 
-!!! tip "Dónde repasarlo en Dart"
-    Documentación oficial: [dart.dev/language](https://dart.dev/language). Busca los términos de la lista anterior.
-
 ## Ejercicios de la unidad
 
 | Bloque | Ejercicios |
