@@ -70,6 +70,236 @@ void main() {
 }
 ```
 
+Para leer **números y otros tipos** (con `int.parse`, `tryParse`...) mira la sección [Leer datos con su tipo](#leer-datos-con-su-tipo-int-double-bool).
+
+## Leer datos con su tipo: `int`, `double`, `bool`...
+
+`stdin.readLineSync()` siempre devuelve **texto**, y su tipo es **`String?`**: «un texto **o `null`**». Para guardar un número en una variable `int` o `double` hay que **convertir** ese texto, y para decidir qué hacer cuando no hay datos hay que tratar el `null`.
+
+| Quiero leer… | Cómo se escribe | Tipo que queda |
+|---|---|---|
+| Un texto | `stdin.readLineSync() ?? ''` | `String` |
+| Un entero | `int.parse(stdin.readLineSync()!)` | `int` |
+| Un decimal | `double.parse(stdin.readLineSync()!)` | `double` |
+| Un sí/no | `(stdin.readLineSync() ?? '').trim().toLowerCase() == 's'` | `bool` |
+| Varios números en una línea | `...split(' ').map(int.parse).toList()` | `List<int>` |
+
+Los cuatro primeros, juntos en un programa, con la comprobación del tipo de cada variable:
+
+```dart
+import 'dart:io';
+
+void main() {
+  print('Edad:');
+  final edad = int.parse(stdin.readLineSync()!);              // int
+  print('Altura en metros:');
+  final altura = double.parse(stdin.readLineSync()!);         // double
+  print('Nombre:');
+  final nombre = stdin.readLineSync() ?? 'anónimo';           // String
+  print('¿Aceptas las condiciones? (s/n):');
+  final acepta = (stdin.readLineSync() ?? '').trim().toLowerCase() == 's';   // bool
+
+  print('$nombre tiene $edad años y mide $altura m');
+  print('El año que viene tendrá ${edad + 1}');
+  print('Acepta: $acepta');
+  print('Tipos: ${edad.runtimeType}, ${altura.runtimeType}, ${nombre.runtimeType}, ${acepta.runtimeType}');
+}
+```
+
+Con esta entrada: `17`, `1.75`, `Ana` y `s` (una por línea).
+
+```text
+Edad:
+Altura en metros:
+Nombre:
+¿Aceptas las condiciones? (s/n):
+Ana tiene 17 años y mide 1.75 m
+El año que viene tendrá 18
+Acepta: true
+Tipos: int, double, String, bool
+```
+
+`print` no muestra comillas ni distingue `17` de `"17"`: por eso se imprime `runtimeType`. Fíjate en que `edad + 1` **suma** (18). Si `edad` fuera el texto `"17"`, `edad + 1` ni siquiera compilaría.
+
+### ¿Por qué `!` o `??`?
+
+`readLineSync()` devuelve `null` cuando **ya no hay más datos**: el usuario pulsa **Ctrl+D** (Linux y Mac) o **Ctrl+Z** y Enter (Windows), o la entrada viene de un archivo que se acabó. Como `int.parse` no acepta `null`, Dart obliga a decidir qué hacer:
+
+| Opción | Qué significa | Si no hay datos |
+|---|---|---|
+| `stdin.readLineSync()!` | «Estoy seguro de que hay una línea» | **Error** al ejecutar |
+| `stdin.readLineSync() ?? 'anónimo'` | «Si no hay, usa este valor» | Usa el valor por defecto |
+| `if (linea == null) { ... }` | Tratar el caso a mano | Lo que tú decidas |
+
+El `!` es lo más cómodo en los primeros ejercicios, pero **si no hay datos el programa se detiene**. Este es el mensaje real de Dart al ejecutarlo con la entrada vacía:
+
+```text
+Unhandled exception:
+Null check operator used on a null value
+```
+
+### Cuando lo que escribe el usuario no es un número
+
+`int.parse` **lanza una excepción** si el texto no es un entero. Sin controlarla, el programa se detiene:
+
+```dart
+import 'dart:io';
+
+void main() {
+  final n = int.parse(stdin.readLineSync()!);
+  print('El doble es ${n * 2}');
+}
+```
+
+Con esta entrada: `abc`.
+
+```text
+Unhandled exception:
+FormatException: Invalid radix-10 number (at character 1)
+abc
+^
+```
+
+Para no «romper» el programa, `int.tryParse` devuelve **`null` en lugar de lanzar la excepción**, y se puede **volver a preguntar**:
+
+```dart
+import 'dart:io';
+
+int pedirEntero(String mensaje) {
+  while (true) {
+    print(mensaje);
+    final linea = stdin.readLineSync();
+    if (linea == null) throw StateError('No hay más datos de entrada');
+    final n = int.tryParse(linea);                         // null si no es un entero (ya ignora los espacios de los lados)
+    if (n != null) return n;
+    print('  Eso no es un número entero. Prueba otra vez.');
+  }
+}
+
+void main() {
+  final n = pedirEntero('Escribe un número entero:');
+  print('Has escrito el $n');
+}
+```
+
+Con esta entrada: `abc`, `4.5` y `  12  ` (con espacios), una por línea. Ni `abc` ni `4.5` son enteros; `parse` y `tryParse` ya ignoran los espacios de los lados.
+
+```text
+Escribe un número entero:
+  Eso no es un número entero. Prueba otra vez.
+Escribe un número entero:
+  Eso no es un número entero. Prueba otra vez.
+Escribe un número entero:
+Has escrito el 12
+```
+
+Fíjate en que también se trata el `null` (`if (linea == null) throw ...`): si la entrada se acabara, el bucle **no se quedaría preguntando para siempre**.
+
+### Decimales: el punto, no la coma
+
+`double.parse` y `double.tryParse` entienden **el punto** como separador decimal. Si alguien escribe `1,75`, no es un `double` para Dart; hay que cambiar la coma por un punto antes de convertir:
+
+```dart
+import 'dart:io';
+
+void main() {
+  final texto = stdin.readLineSync()!;
+  print(double.tryParse(texto));                       // null: con coma no es un double
+  print(double.tryParse(texto.replaceAll(',', '.')));  // 1.75: se cambia la coma por el punto
+}
+```
+
+Con esta entrada: `1,75`.
+
+```text
+null
+1.75
+```
+
+### Varios valores en una misma línea
+
+Con `split` se parte la línea en trozos y con `map(int.parse)` se convierte cada uno. El patrón `RegExp(r'\s+')` significa «uno o más espacios seguidos», así que sobran los espacios de más:
+
+```dart
+import 'dart:io';
+
+void main() {
+  final numeros = (stdin.readLineSync() ?? '')
+      .trim()
+      .split(RegExp(r'\s+'))        // uno o más espacios seguidos
+      .map(int.parse)
+      .toList();
+  print(numeros);
+  print('Suma: ${numeros.reduce((a, b) => a + b)}');
+}
+```
+
+Con esta entrada: `3 4  5` (con dos espacios entre el 4 y el 5).
+
+```text
+[3, 4, 5]
+Suma: 12
+```
+
+### Leer hasta que se acabe la entrada
+
+Como `readLineSync()` devuelve `null` al final, se puede leer **línea a línea hasta que no haya más**. Aquí, ignorando lo que no sea un número:
+
+```dart
+import 'dart:io';
+
+void main() {
+  var suma = 0;
+  String? linea;
+  while ((linea = stdin.readLineSync()) != null) {        // null cuando no hay más líneas
+    final n = int.tryParse(linea!.trim());
+    if (n == null) {
+      print('Ignorada: "$linea"');
+      continue;
+    }
+    suma += n;
+  }
+  print('Suma: $suma');
+}
+```
+
+Con esta entrada: `10`, `20`, `hola` y `5`, una por línea.
+
+```text
+Ignorada: "hola"
+Suma: 35
+```
+
+### Booleanos: `true`/`false` frente a «s/n»
+
+Desde Dart 3 existe `bool.parse`, pero solo entiende las palabras **`true` y `false`** (con `caseSensitive: false` ignora las mayúsculas). Para preguntas como «¿Aceptas? (s/n)» lo habitual es **comparar el texto con una letra**, como se hizo en el primer ejemplo.
+
+```dart
+import 'dart:io';
+
+void main() {
+  final a = bool.parse(stdin.readLineSync()!, caseSensitive: false);
+  final b = bool.parse(stdin.readLineSync()!);
+  print('$a $b');
+  print(bool.tryParse('si'));                             // null: solo reconoce true y false
+}
+```
+
+Con esta entrada: `TRUE` y `false`.
+
+```text
+true false
+null
+```
+
+!!! tip "En resumen"
+    1. `readLineSync()` da **texto o `null`**.
+    2. Para un número: `int.parse(...)` / `double.parse(...)`; para **no fallar** con datos mal escritos: `tryParse`, que devuelve `null` si no puede.
+    3. Para un sí/no: **compara** (`== 's'`).
+    4. Los decimales llevan **punto**.
+
+Las salidas de esta sección se han obtenido **ejecutando cada programa con Dart 3.13 y la entrada indicada**.
+
 ## Comentarios
 
 ```dart
