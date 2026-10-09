@@ -20,6 +20,9 @@ Práctica de clase de POO: constructores, sobrecarga, enumerados y colecciones.
 
 **Enumerado `Color`**: blanco, negro, gris, azul y verde.
 
+!!! note "En Dart"
+    Dart no tiene sobrecarga: `llenar([int? cantidad])` con un parámetro opcional cubre `llenar()` y `llenar(cantidad)`.
+
 ## Ejercicio 4.15
 
 **Programa principal.**
@@ -29,3 +32,6 @@ Práctica de clase de POO: constructores, sobrecarga, enumerados y colecciones.
 3. Muestra las cafeteras y las tazas.
 4. Llena la cafetera 1, vacía la 2, añade a la 2 la mitad de su capacidad y añade 400 c.c. a la 3. Muestra las cafeteras.
 5. Sirve café en las tazas, en orden cafetera 1, 2 y 3, mientras quede café. Muestra el resultado final.
+
+!!! note "En Dart"
+    Python y Dart no admiten varios constructores con el mismo nombre. Usa parámetros por defecto o constructores con nombre (Dart) / `@classmethod` (Python) para que cada cafetera se cree de una forma distinta.

@@ -32,6 +32,9 @@ En `main` crea 3 personas (la primera sin nombre) con ambos constructores y mué
 2. Persona 3: muestra peso, altura e IMC; cambia la altura a 1.80 y vuelve a mostrarlos.
 3. Persona 2: dale la misma altura que a la persona 3, muéstralas y **compara** si son iguales (implementa `equals`).
 
+!!! note "En Dart"
+    Varios constructores en Dart: una clase no puede repetir el nombre del constructor. Usa **parámetros opcionales** (`Tiempo(this.h, [this.m = 0, this.s = 0])`) o **constructores con nombre** (`Persona.conNombre(...)`).
+
 ## Ejercicio 4.3
 
 Amplía la clase `Persona` del ejercicio 4.2:
@@ -67,3 +70,6 @@ En `main` crea varios coches y comprueba, **capturando las excepciones** que lan
 * `esMayorQue(t)` y `esMenorQue(t)`.
 
 En `main` pide por teclado hora, minuto y segundo (se pueden omitir los últimos) y prueba todos los métodos.
+
+!!! note "En Dart"
+    Varios constructores en Dart: una clase no puede repetir el nombre del constructor. Usa **parámetros opcionales** (`Tiempo(this.h, [this.m = 0, this.s = 0])`) o **constructores con nombre** (`Persona.conNombre(...)`).
