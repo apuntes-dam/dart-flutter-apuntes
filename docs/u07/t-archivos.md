@@ -2,6 +2,9 @@
 
 Los programas guardan datos en **archivos**, organizados en **carpetas** (directorios). Saber consultar, crear, copiar, mover y borrar es la base para cualquier programa que trabaje con datos que deben sobrevivir al cierre.
 
+!!! tip "Qué excepción salta y qué no"
+    Aquí se usan las operaciones de `File` y `Directory`. En [7.E](t-path.md) están las **excepciones concretas** de cada una (`PathExistsException`, `PathNotFoundException`...) y las operaciones que **no** dan error aunque el destino exista, como `copySync` o `renameSync`.
+
 ## Rutas
 
 Una **ruta** indica dónde está un archivo o carpeta.

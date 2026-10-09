@@ -9,7 +9,7 @@ Leer y escribir texto: secuencial, línea a línea, y siempre cerrando el archiv
 **Contador.** Dado un archivo de texto, muestra su número de líneas, de palabras y de caracteres.
 
 !!! note "En Dart"
-    Usa `File('x.txt').readAsLinesSync()` o `readAsStringSync()`; para archivos grandes, `openRead()`.
+    Usa `File('x.txt').readAsLinesSync()` o `readAsStringSync()`; para archivos grandes, `openRead()` (ver [7.E](t-path.md)).
 
 <details class="sol" data-key="u69/u7-3/7.7">
 <summary>Solución modelo (bloqueada)</summary>
