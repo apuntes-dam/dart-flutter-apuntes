@@ -81,13 +81,16 @@ Pide el precio final de un artículo y, suponiendo un IVA del 10 %, muestra el I
 
 Pide tres números y muestra su suma.
 
+!!! note "En Dart"
+    Si el usuario escribe los tres números en una sola línea (`4 5 6`), puedes leerla entera y separarla con `stdin.readLineSync()!.split(' ')` (el `!` es porque devuelve `String?`).
+
 ## Ejercicio 1.2.8
 
-Resuelve el ejercicio 1.2.7 usando solo dos variables distintas.
+Pide una cantidad de segundos y muéstrala en horas, minutos y segundos. Por ejemplo, `3725` segundos son `1 h 2 min 5 s`.
 
 ## Ejercicio 1.2.9
 
-¿Se puede resolver el ejercicio 1.2.7 sin usar ninguna variable? Inténtalo y explica qué has hecho.
+Guarda dos valores en las variables `a` y `b`, pedidos por teclado. Intercambia sus valores (que `a` acabe con lo que tenía `b` y al revés) y muestra ambas variables antes y después del intercambio.
 
 ## Ejercicio 1.2.10
 
@@ -116,6 +119,9 @@ void main() {
 ## Ejercicio 1.2.13
 
 Pide dos enteros `n` y `m` y muestra `la división de n entre m da un cociente c y un resto r`. Controla también la división entre cero.
+
+!!! note "En Dart"
+    En Dart, `/` siempre da un decimal. Para el cociente entero usa `~/` y para el resto, `%`.
 
 <details class="sol" data-key="p1-2/1.2.13">
 <summary>Solución modelo (bloqueada)</summary>
@@ -147,6 +153,9 @@ Pide un nombre y un entero `n` y muestra el nombre `n` veces, cada una en una l�
 
 Pide el nombre completo y muéstralo tres veces: todo en minúsculas, todo en mayúsculas y con la inicial de cada palabra en mayúscula. El usuario puede escribirlo con cualquier combinación de mayúsculas y minúsculas.
 
+!!! note "En Dart"
+    Dart no trae una función para esto: separa las palabras con `split(' ')` y, en cada una, junta `substring(0, 1).toUpperCase()` con el resto en minúsculas.
+
 ## Ejercicio 1.2.19
 
 Pide un nombre y muestra `NOMBRE tiene n letras.`, con el nombre en mayúsculas.
@@ -171,6 +180,9 @@ Pide un correo electrónico y muestra otro con el mismo nombre de usuario (lo qu
 
 Pide el precio de un producto en euros con dos decimales y muestra cuántos euros y cuántos céntimos son.
 
+!!! note "En Dart"
+    No obtengas los céntimos multiplicando el decimal por 100: `19.99 * 100` no da exactamente `1999` sino `1998.9999999999998`, y al quedarte con la parte entera salen 1998. Separa el texto por el punto o redondea.
+
 ## Ejercicio 1.2.25
 
 Pide una fecha de nacimiento con formato `dd/mm/aaaa` y muestra día, mes y año. Después adáptalo para que funcione si el día o el mes se escriben con un solo dígito.
@@ -183,9 +195,15 @@ Pide los productos de una cesta de la compra separados por comas y muestra cada 
 
 Pide el nombre de un producto, su precio y las unidades, y muestra una línea con el nombre, el precio unitario (6 dígitos enteros y 2 decimales), las unidades (3 dígitos) y el coste total (8 dígitos enteros y 2 decimales).
 
+!!! note "En Dart"
+    Dart no tiene `printf`: usa `toStringAsFixed(2)` para los decimales y `padLeft(9)` para rellenar con espacios por la izquierda.
+
 ## Ejercicio 1.2.28
 
 Calcula el área de un triángulo a partir de sus tres lados (fórmula de Herón). Indica qué ocurre si las longitudes no pueden formar un triángulo.
+
+!!! note "En Dart"
+    `sqrt` de un número negativo no lanza ninguna excepción: devuelve `NaN`. Compruébalo antes de calcular.
 
 ## Ejercicio 1.2.29
 

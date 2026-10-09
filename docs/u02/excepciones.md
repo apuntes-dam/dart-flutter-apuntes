@@ -20,6 +20,9 @@ Pide un entero positivo y muestra la cuenta atrás hasta cero. Repite la petici�
 
 Pide un entero. Si la entrada no es correcta, muestra `La entrada no es correcta` y vuelve a lanzar la excepción capturada.
 
+!!! note "En Dart"
+    Usa `int.parse`, que lanza `FormatException`; `int.tryParse` no la lanza y devuelve `null`.
+
 <details class="sol" data-key="p2-3/2.3.4">
 <summary>Solución modelo (bloqueada)</summary>
 <div class="sol-body"><p class="sol-aviso">🔒 La solución completa está bloqueada. Esto es solo un ejemplo de cómo empieza:</p><pre><code>import 'dart:io';

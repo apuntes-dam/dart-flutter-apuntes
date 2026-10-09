@@ -20,6 +20,9 @@ Pide dos números y muestra su división. Si el divisor es cero, muestra un erro
 
 Pide un entero y muestra si es par o impar.
 
+!!! note "En Dart"
+    En Dart, `-3 % 2` vale `1` (el resto nunca es negativo); `-3.remainder(2)` vale `-1`.
+
 <details class="sol" data-key="p2-1/2.1.4">
 <summary>Solución modelo (bloqueada)</summary>
 <div class="sol-body"><p class="sol-aviso">🔒 La solución completa está bloqueada. Esto es solo un ejemplo de cómo empieza:</p><pre><code>import 'dart:io';
@@ -37,6 +40,9 @@ Para tributar un impuesto hay que ser mayor de 16 años **y** tener unos ingreso
 ## Ejercicio 2.1.6
 
 Un curso se divide en dos grupos según sexo y nombre. El grupo A son las mujeres con nombre anterior a la M y los hombres con nombre posterior a la N; el grupo B, el resto. Pregunta nombre y sexo y muestra el grupo.
+
+!!! note "En Dart"
+    Dart no compara textos con `<`: usa `compareTo`, que devuelve un número negativo si el primero va antes.
 
 ## Ejercicio 2.1.7
 

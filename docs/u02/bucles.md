@@ -128,6 +128,9 @@ Lee enteros positivos hasta que se introduzca 0 y muestra el mayor.
 
 Lee un entero positivo y muestra la suma de sus dígitos.
 
+!!! note "En Dart"
+    En Dart, `n / 10` da un decimal. Para quitar el último dígito usa la división entera `n ~/ 10`.
+
 ## Ejercicio 2.2.18
 
 Pide enteros positivos y, por cada uno, muestra la suma de sus dígitos. Termina al introducir -1 y muestra cuántos de los números eran pares.
@@ -161,6 +164,9 @@ Libro: 20 años después
 Libro: *
 Fin. Se leyó 1 línea completa.
 ```
+
+!!! note "En Dart"
+    Dart no tiene un `isDigit` para textos: un carácter es un dígito si `int.tryParse(c) != null`.
 
 ## Ejercicio 2.2.24
 

@@ -43,6 +43,9 @@ void main() {
 
 **Registro (log).** Escribe una función `registrar(mensaje)` que **añada** al final de un archivo una línea con la fecha y hora (`AAAA-MM-DD HH:MM:SS`) y el mensaje, sin borrar lo anterior. Llámala desde un programa pequeño varias veces y comprueba el archivo.
 
+!!! note "En Dart"
+    Dart no trae formato de fechas (solo con el paquete `intl`). `DateTime.now().toString()` da `2026-10-09 15:58:01.123456`: con `substring(0, 19)` queda en el formato pedido.
+
 ## Ejercicio 7.11
 
 **Notas desde CSV.** Dado un archivo `notas.csv` con líneas `alumno;nota1;nota2;nota3`, calcula la nota media de cada alumno y la media de la clase, y escribe el resultado en `medias.txt`. Controla las notas que no sean números.
