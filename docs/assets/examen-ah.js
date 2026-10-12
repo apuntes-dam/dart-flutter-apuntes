@@ -194,7 +194,8 @@
     } else if (it.tipo === "salida") {
       var area = card.querySelector("textarea"); area.disabled = true;
       bien = norm(area.value) === norm(q.a); it.puntos = bien ? 1 : 0;
-      nota = (bien ? "✅ Correcto. " : "❌ No coincide. ") + "<p>Salida real:</p><pre><code>" + esc(q.a) + "</code></pre>" + md(q.e);
+      nota = (bien ? "✅ Correcto. " : "❌ No coincide. ") + "<p>Respuesta correcta:</p><pre><code>" + esc(q.a) + "</code></pre>" + md(q.e) +
+        (q.v ? "<p><small>Resultado obtenido ejecutando este widget con <code>" + q.v + "</code>.</small></p>" : "");
     } else {
       card.querySelector("textarea").disabled = true;
       nota = "<p><strong>Solución modelo:</strong></p><pre><code>" + esc(q.sol) + "</code></pre>";
