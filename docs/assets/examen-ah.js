@@ -191,18 +191,21 @@
       it.puntos = bien ? 1 : 0;
       nota = (bien ? "✅ Correcto. " : (elegida < 0 ? "⚠️ Sin responder. " : "❌ Incorrecto. ")) + md(q.e);
       if (it.tipo === "hueco" && q.a) nota += "<pre><code>" + esc(q.a) + "</code></pre>";
-      if (it.tipo === "hueco" && q.v) nota += "<p><small>Opción comprobada con <code>" + q.v + "</code> (usa hardware: no se ejecuta aquí).</small></p>";
+      if (it.tipo === "hueco" && q.v) nota += q.v === "dart analyze"
+        ? "<p><small>Opción comprobada con <code>dart analyze</code> (usa hardware: no se ejecuta aquí).</small></p>"
+        : "<p><small>Opción comprobada con: " + esc(q.v) + ".</small></p>";
     } else if (it.tipo === "salida") {
       var area = card.querySelector("textarea"); area.disabled = true;
       bien = norm(area.value) === norm(q.a); it.puntos = bien ? 1 : 0;
       nota = (bien ? "✅ Correcto. " : "❌ No coincide. ") + "<p>Respuesta correcta:</p><pre><code>" + esc(q.a) + "</code></pre>" + md(q.e) +
-        (q.v ? "<p><small>Resultado obtenido ejecutando este widget con <code>" + q.v + "</code>.</small></p>" : "");
+        (q.v ? "<p><small>" + (q.v === "flutter test" ? "Resultado obtenido ejecutando este widget con <code>flutter test</code>." : "Resultado obtenido " + esc(q.v) + ".") + "</small></p>" : "");
     } else {
       card.querySelector("textarea").disabled = true;
       nota = "<p><strong>Solución modelo:</strong></p><pre><code>" + esc(q.sol) + "</code></pre>";
       if (q.a) nota += "<p>Con esa solución se muestra:</p><pre><code>" + esc(q.a) + "</code></pre>";
       else if (q.v && q.v.indexOf("flutter test") === 0) nota += "<p><small>Esta solución se ha comprobado con <code>flutter test</code>" + (q.v.indexOf("defectuosas") > 0 ? ": pasa con el código correcto y detecta versiones defectuosas del código." : ".") + "</small></p>";
-      else nota += "<p><small>Esta solución compila con los paquetes reales (<code>dart analyze</code>), pero usa hardware y no se ha podido ejecutar en un móvil.</small></p>";
+      else if (q.v === "dart analyze") nota += "<p><small>Esta solución compila con los paquetes reales (<code>dart analyze</code>), pero usa hardware y no se ha podido ejecutar en un móvil.</small></p>";
+      else if (q.v) nota += "<p><small>Solución comprobada con: " + esc(q.v) + ".</small></p>";
       nota += md(q.e) + "<p><strong>Autoevaluación:</strong> marca lo que cumple <em>tu</em> código.</p>";
       q.crit.forEach(function (c, k) { nota += '<label class="ex-op"><input type="checkbox" class="ex-crit" data-k="' + k + '"> ' + md(c) + "</label>"; });
       it.marcas = q.crit.map(function () { return false; });
