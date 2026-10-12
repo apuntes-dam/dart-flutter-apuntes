@@ -146,7 +146,8 @@
       h += "<p>" + md(q.q) + "</p><pre><code>" + esc(q.code).replace("___", "<mark>▢▢▢</mark>") + "</code></pre>";
       it.orden.forEach(function (o, k) { h += '<label class="ex-op" data-k="' + k + '"><input type="radio" name="p' + it.num + '" value="' + k + '"> <code>' + esc(o.t) + "</code></label>"; });
     } else {
-      h += "<p>" + md(q.q) + '</p><textarea rows="14" name="p' + it.num + '" spellcheck="false" placeholder="Escribe aquí tu código (puedes probarlo en DartPad o en tu editor)"></textarea>';
+      h += "<p>" + md(q.q) + "</p>" + (q.code ? "<p>Código que hay que probar:</p><pre><code>" + esc(q.code) + "</code></pre>" : "") +
+        '<textarea rows="14" name="p' + it.num + '" spellcheck="false" placeholder="Escribe aquí tu código (puedes probarlo en DartPad o en tu editor)"></textarea>';
     }
     h += '<div class="ex-fb"></div>';
     if (modo === "repaso") h += '<button class="ex-btn sec ex-comp">Comprobar</button>';
@@ -200,7 +201,7 @@
       card.querySelector("textarea").disabled = true;
       nota = "<p><strong>Solución modelo:</strong></p><pre><code>" + esc(q.sol) + "</code></pre>";
       if (q.a) nota += "<p>Con esa solución se muestra:</p><pre><code>" + esc(q.a) + "</code></pre>";
-      else if (q.v === "flutter test") nota += "<p><small>Esta solución se ha comprobado con <code>flutter test</code>.</small></p>";
+      else if (q.v && q.v.indexOf("flutter test") === 0) nota += "<p><small>Esta solución se ha comprobado con <code>flutter test</code>" + (q.v.indexOf("defectuosas") > 0 ? ": pasa con el código correcto y detecta versiones defectuosas del código." : ".") + "</small></p>";
       else nota += "<p><small>Esta solución compila con los paquetes reales (<code>dart analyze</code>), pero usa hardware y no se ha podido ejecutar en un móvil.</small></p>";
       nota += md(q.e) + "<p><strong>Autoevaluación:</strong> marca lo que cumple <em>tu</em> código.</p>";
       q.crit.forEach(function (c, k) { nota += '<label class="ex-op"><input type="checkbox" class="ex-crit" data-k="' + k + '"> ' + md(c) + "</label>"; });
