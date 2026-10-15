@@ -26,8 +26,9 @@ theme:
     - content.code.copy
     - search.highlight
 extra_css:
+  - assets/narrador.css
   - assets/extra.css
-  - assets/lenguajes.css?v=a75313c9
+  - assets/lenguajes.css?v=499d1441
 extra:
   social:
     - icon: fontawesome/brands/github
@@ -170,3 +171,6 @@ nav:
       - "Boletín": tema1-ah/boletin.md
       - "Práctica: Hola, plataformas": tema1-ah/practica.md
   - "Aplicaciones Híbridas · Simulador de examen": examen-ah/index.md
+
+extra_javascript:
+  - assets/narrador.js

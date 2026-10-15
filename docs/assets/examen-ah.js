@@ -14,7 +14,7 @@
   function esc(t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
   function md(t) { return esc(t).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/`([^`]+)`/g, "<code>$1</code>"); }
   function barajar(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  function norm(s) { return String(s).replace(/\r/g, "").split("\n").map(function (l) { return l.replace(/\s+$/, ""); }).join("\n").replace(/^\n+|\n+$/g, ""); }
+  function norm(s) { return String(s).replace(/\r/g, "").split("\n").map(function (l) { return l.replace(/\s+$/, ""); }).join("\n").replace(/^\n+|\n+$/g, "").replace(/(\d),(\d)/g, "$1.$2"); }   // 6,67 y 6.67 valen igual
   function hora(s) { var m = Math.floor(s / 60), x = s % 60; return (m < 10 ? "0" : "") + m + ":" + (x < 10 ? "0" : "") + x; }
   function el(html) { var d = document.createElement("div"); d.innerHTML = html; return d.firstElementChild; }
 
@@ -110,7 +110,16 @@
       var s = elegir(t, todos("salida"), 2).map(function (q) { return crearItem(t, q, "salida", 0); });
       var u = elegir(t, todos("hueco"), 2).map(function (q) { return crearItem(t, q, "hueco", 0); });
       var c = elegir(t, todos("codigo"), 2).map(function (q) { return crearItem(t, q, "codigo", 0); });
-      items = s.concat(u, c).map(function (it, i) { it.num = i + 1; return it; });
+      items = s.concat(u, c);
+      if (items.length < 6) {        // si el tema no tiene de algún tipo (por ejemplo, huecos), se completa con los que haya
+        var usadas = items.map(function (it) { return it.q; });
+        ["salida", "codigo", "hueco"].forEach(function (tipo) {
+          if (items.length >= 6) return;
+          var libres = todos(tipo).filter(function (q) { return usadas.indexOf(q) < 0; });
+          elegir(t, libres, 6 - items.length).forEach(function (q) { items.push(crearItem(t, q, tipo, 0)); usadas.push(q); });
+        });
+      }
+      items = items.map(function (it, i) { it.num = i + 1; return it; });
     } else {
       nombre = "Repaso de fallos"; limite = 0;
       var h = leer();
