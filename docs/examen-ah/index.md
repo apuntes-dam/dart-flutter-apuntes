@@ -1,9 +1,3 @@
----
-search:
-  exclude: true
-noindex: true
----
-
 # Simulador de examen · Aplicaciones Híbridas
 
 Practica como en el examen: **preguntas de teoría** (test) y **ejercicios prácticos** (qué muestra un programa, completar una línea y escribir código).
